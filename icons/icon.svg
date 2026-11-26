@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="월급날 가계부">
+  <rect width="512" height="512" rx="112" fill="#3182f6"/>
+  <g fill="none" stroke="#ffffff" stroke-width="30" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M166 158 L213 358 L256 240 L299 358 L346 158"/>
+    <path d="M148 216 H364" stroke-width="26"/>
+    <path d="M148 286 H364" stroke-width="26"/>
+  </g>
+</svg>
