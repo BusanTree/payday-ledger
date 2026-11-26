@@ -301,6 +301,18 @@ h1,h2,h3,p{margin:0;}
   font-size:13.5px;font-weight:600;
 }
 .chip.on{background:var(--blue-soft);color:var(--blue-dark);box-shadow:inset 0 0 0 1.5px var(--blue);}
+.chip.chip-add{background:#fff;color:var(--blue-dark);box-shadow:inset 0 0 0 1.5px #bcd4f7;font-weight:800;padding:11px 13px;}
+.chip.chip-add.on{background:var(--blue-soft);box-shadow:inset 0 0 0 1.5px var(--blue);}
+.cat-add{display:none;margin-top:9px;padding:10px;border-radius:13px;background:#f7f8fa;}
+.cat-add.show{display:block;}
+.cat-add .f-input{min-height:44px;font-size:14px;padding:10px 12px;background:#fff;}
+.emoji-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px;}
+.emoji-btn{width:42px;height:42px;border-radius:10px;background:#fff;box-shadow:inset 0 0 0 1px var(--line);font-size:18px;line-height:1;display:flex;align-items:center;justify-content:center;}
+.emoji-btn.on{background:var(--blue-soft);box-shadow:inset 0 0 0 1.5px var(--blue);}
+.cat-add-actions{display:flex;gap:6px;margin-top:9px;}
+.cat-add-actions .mini-btn{flex:1;min-height:42px;}
+.cat-add-err{display:none;font-size:11.5px;font-weight:700;color:var(--red);margin-top:7px;line-height:1.4;}
+.cat-add-err.show{display:block;}
 .err{
   font-size:12.5px;font-weight:600;color:var(--red);background:var(--red-soft);
   padding:10px 12px;border-radius:11px;margin-bottom:12px;line-height:1.4;
@@ -358,7 +370,12 @@ h1,h2,h3,p{margin:0;}
   padding:8px 8px 8px 12px;font-size:13px;font-weight:600;color:var(--text2);margin:0 6px 6px 0;
 }
 .mchip button{width:28px;height:28px;border-radius:50%;background:#e2e6ea;color:#6b7684;font-size:12px;display:flex;align-items:center;justify-content:center;}
-.add-row{display:flex;gap:6px;margin-top:4px;}
+.add-row{display:flex;gap:6px;margin-top:4px;align-items:stretch;}
+.emoji-pick{width:46px;min-height:44px;border-radius:10px;background:#f2f4f6;font-size:19px;line-height:1;flex:none;display:flex;align-items:center;justify-content:center;}
+.emoji-pick.on{background:var(--blue-soft);box-shadow:inset 0 0 0 1.5px var(--blue);}
+.cat-emoji-row{display:none;flex-wrap:wrap;gap:6px;margin-top:6px;}
+.cat-emoji-row.show{display:flex;}
+.mchip .m-ico{font-size:14px;line-height:1;}
 .add-row .f-input{min-height:44px;font-size:14px;padding:10px 12px;}
 .add-row .mini-btn{min-height:44px;padding:0 16px;flex:none;font-weight:800;}
 .row-btn{
@@ -533,16 +550,20 @@ h1,h2,h3,p{margin:0;}
       <div class="sub-label">지출</div>
       <div id="expenseCatChips"></div>
       <div class="add-row">
+        <button class="emoji-pick" id="newExpenseEmoji" data-emoji-for="expense" aria-label="새 지출 카테고리 아이콘">📌</button>
         <input id="newExpenseCat" class="f-input" type="text" maxlength="12" placeholder="새 지출 카테고리" />
         <button class="mini-btn solid" data-addcat="expense">추가</button>
       </div>
+      <div class="cat-emoji-row" id="expenseEmojiRow" data-emoji-row="expense"></div>
       <div class="sub-label">수입</div>
       <div id="incomeCatChips"></div>
       <div class="add-row">
+        <button class="emoji-pick" id="newIncomeEmoji" data-emoji-for="income" aria-label="새 수입 카테고리 아이콘">💰</button>
         <input id="newIncomeCat" class="f-input" type="text" maxlength="12" placeholder="새 수입 카테고리" />
         <button class="mini-btn solid" data-addcat="income">추가</button>
       </div>
-      <p class="hint">카테고리를 지우면 그 카테고리로 기록된 내역은 '기타/이월·기타'로 옮겨져요.</p>
+      <div class="cat-emoji-row" id="incomeEmojiRow" data-emoji-row="income"></div>
+      <p class="hint">카테고리를 지우면 그 카테고리로 기록된 내역은 '기타/이월·기타'로 옮겨져요. 왼쪽 아이콘을 눌러 이모지를 고르고 이름을 적으면 바로 추가돼요. 입력 화면의 '＋ 추가'로도 그 자리에서 만들 수 있어요.</p>
     </div>
 
     <div class="card">
@@ -560,6 +581,7 @@ h1,h2,h3,p{margin:0;}
       <ol class="guide">
         <li>기간을 월급날 기준(예: 매월 25일)으로 정하면 25일~다음 달 24일이 기본이에요. 25일이 주말·공휴일이면 그 전 평일로 당겨져요(12.25 성탄절 → 12.24 지급이면 12.23까지 관리).</li>
         <li>오른쪽 아래 + 버튼으로 수입·지출을 기록해요. 기간 밖 날짜는 저장되지 않아요.</li>
+        <li>카테고리를 새로 만들려면 입력 화면 카테고리 줄 끝의 '＋ 추가'를 누르거나, 설정 → 카테고리 관리에서 아이콘(이모지)까지 골라 추가하면 돼요.</li>
         <li>폰에서는 이 파일을 다운로드 폴더에 두고 Chrome으로 열면 돼요.</li>
         <li>Chrome 오른쪽 위 ⋮ 메뉴에 '홈 화면에 추가'가 보이면 눌러 두세요. 없으면 북마크로 저장해 두면 돼요.</li>
         <li>데이터는 이 브라우저에만 있어요. 폰을 바꾸기 전에 JSON 백업을 받아두세요.</li>
@@ -619,6 +641,15 @@ h1,h2,h3,p{margin:0;}
     <div class="field">
       <div class="f-label">카테고리</div>
       <div class="chips" id="entryCats"></div>
+      <div class="cat-add" id="entryCatAddForm">
+        <input id="entryCatName" class="f-input" type="text" maxlength="12" placeholder="새 카테고리 이름 (최대 12자)" autocomplete="off" aria-label="새 카테고리 이름" />
+        <div class="emoji-row" id="entryCatEmojiRow" aria-label="카테고리 아이콘 선택"></div>
+        <p class="cat-add-err" id="entryCatAddErr"></p>
+        <div class="cat-add-actions">
+          <button type="button" class="mini-btn" id="entryCatAddCancel">취소</button>
+          <button type="button" class="mini-btn solid" id="entryCatAddBtn">추가</button>
+        </div>
+      </div>
     </div>
     <div class="field">
       <label class="f-label" for="entryMemo">메모</label>
@@ -728,14 +759,25 @@ h1,h2,h3,p{margin:0;}
 /* ======================= utilities ======================= */
 const KEY = 'paydayLedger.v1';
 const DEF_CATS = {
-  expense: ['식비·배달','교통·차량','쇼핑·생활','AI·구독·통신','공과금·보험·병원','여가·모임','기타'],
+  expense: ['식비·배달','교통·차량','쇼핑·생활','AI·구독·통신','공과금·보험·병원','여가·모임','자기개발','기타'],
   income: ['월급','부수입·공모전','포인트·캐시백','이월·기타']
 };
+/* 기본 카테고리 세대(catSeed). 이 값이 오르면 아래 NEW_DEFAULT_CATS만큼이
+   이미 저장된 데이터에도 한 번 보강된다. 사용자가 직접 지운 기록(removedCats)은 건너뛴다. */
+const CAT_SEED = 2;
+const NEW_DEFAULT_CATS = { expense: ['자기개발'], income: [] };
 const ICON = {
   '식비·배달':'🍚','교통·차량':'🚌','쇼핑·생활':'🛍️','AI·구독·통신':'💻',
-  '공과금·보험·병원':'🧾','여가·모임':'🎉','기타':'📌',
+  '공과금·보험·병원':'🧾','여가·모임':'🎉','자기개발':'📚','기타':'📌',
   '월급':'💰','부수입·공모전':'🏆','포인트·캐시백':'🎁','이월·기타':'🔁'
 };
+/* 카테고리 고유 색 — 같은 카테고리는 차트·범례에서 늘 같은 색으로 보인다. */
+const CAT_COLOR = {
+  '식비·배달':'#ff9f43','교통·차량':'#4dabf7','쇼핑·생활':'#f783ac','AI·구독·통신':'#7c5cff',
+  '공과금·보험·병원':'#00b8d9','여가·모임':'#12b886','자기개발':'#2f9e44','기타':'#8b95a1',
+  '월급':'#3182f6','부수입·공모전':'#f04452','포인트·캐시백':'#20c997','이월·기타':'#adb5bd'
+};
+const EMOJI_CHOICES = ['📚','🍚','☕','🛍️','🚌','💻','🧾','🎉','🏃','💊','✈️','🎧','🎮','🐶','🎁','💰','🏆','📌'];
 const PALETTE = ['#3182f6','#00b8d9','#7c5cff','#ff9f43','#f04452','#12b886','#8b95a1','#e8590c','#4dabf7','#82c91e','#f783ac','#20c997'];
 
 const pad2 = n => String(n).padStart(2,'0');
@@ -752,6 +794,21 @@ const lastDayOf = (y,m0) => new Date(y, m0+1, 0).getDate();
 const clampDate = (y,m0,d) => new Date(y, m0, Math.min(d, lastDayOf(y,m0)));
 const fmtMD = d => (d.getMonth()+1) + '.' + d.getDate();
 const nextMonthOf = (y,m0) => { let ny=y, nm=m0+1; if (nm>11){ nm=0; ny+=1; } return { y: ny, m: nm }; };
+
+/* 카테고리 아이콘·색 도우미 (사용자가 고른 아이콘 → 기본 아이콘 → 구분 기본값 순) */
+const defaultEmoji = type => (type === 'income' ? '💰' : '📌');
+function catIcon(cat, type){
+  return (state && state.catIcons && state.catIcons[cat]) || ICON[cat] || defaultEmoji(type);
+}
+function catColor(cat, i){
+  return CAT_COLOR[cat] || PALETTE[i % PALETTE.length];
+}
+function renderEmojiChoices(box, selected){
+  if (!box) return;
+  box.innerHTML = EMOJI_CHOICES.map(e =>
+    '<button type="button" class="emoji-btn' + (e === selected ? ' on' : '') + '" data-emoji="' + e + '" aria-label="' + e + ' 아이콘">' + e + '</button>'
+  ).join('');
+}
 
 /* ======================= 한국 공휴일 (오프라인 내장, 2025~2035) =======================
    「공휴일에 관한 법률」·「관공서의 공휴일에 관한 규정」 기준.
@@ -861,6 +918,9 @@ function defaultState(){
     }],
     currentPeriodId: null,
     cats: { expense: DEF_CATS.expense.slice(), income: DEF_CATS.income.slice() },
+    catIcons: {},
+    removedCats: { expense: [], income: [] },
+    catSeed: CAT_SEED,
     entries: []
   };
 }
@@ -870,6 +930,31 @@ state.currentPeriodId = state.periods[0].id;
 function normalize(s){
   const d = defaultState();
   if (!s || typeof s !== 'object') return d;
+  /* --- 카테고리: 새 기본 카테고리 보강 + 사용자가 지운 기록 존중 --- */
+  const savedSeed = Math.max(1, parseInt(s.catSeed, 10) || 1);
+  const removedCats = {
+    expense: (s.removedCats && Array.isArray(s.removedCats.expense)) ? s.removedCats.expense.filter(x => typeof x === 'string' && x) : [],
+    income: (s.removedCats && Array.isArray(s.removedCats.income)) ? s.removedCats.income.filter(x => typeof x === 'string' && x) : []
+  };
+  const mergeCats = (type, arr) => {
+    const list = (arr && Array.isArray(arr) && arr.length) ? arr.filter(x => typeof x === 'string' && x).slice() : DEF_CATS[type].slice();
+    if (savedSeed < CAT_SEED){
+      NEW_DEFAULT_CATS[type].forEach(def => {
+        if (list.indexOf(def) >= 0) return;              // 이미 있음
+        if (removedCats[type].indexOf(def) >= 0) return;  // 사용자가 지운 적 있음
+        // 기본 순서상 자기 자리(예: '기타' 앞)에 끼워 넣는다
+        const next = DEF_CATS[type].slice(DEF_CATS[type].indexOf(def) + 1).find(c => list.indexOf(c) >= 0);
+        list.splice(next ? list.indexOf(next) : list.length, 0, def);
+      });
+    }
+    return list;
+  };
+  const catIcons = {};
+  if (s.catIcons && typeof s.catIcons === 'object' && !Array.isArray(s.catIcons)){
+    Object.keys(s.catIcons).forEach(k => {
+      if (typeof s.catIcons[k] === 'string' && s.catIcons[k]) catIcons[k] = s.catIcons[k];
+    });
+  }
   const out = {
     v: 1,
     periods: Array.isArray(s.periods) && s.periods.length ? s.periods.filter(p => p && p.id).map(p => {
@@ -887,9 +972,12 @@ function normalize(s){
       };
     }) : d.periods,
     cats: {
-      expense: (s.cats && Array.isArray(s.cats.expense) && s.cats.expense.length) ? s.cats.expense.slice() : DEF_CATS.expense.slice(),
-      income: (s.cats && Array.isArray(s.cats.income) && s.cats.income.length) ? s.cats.income.slice() : DEF_CATS.income.slice()
+      expense: mergeCats('expense', s.cats && s.cats.expense),
+      income: mergeCats('income', s.cats && s.cats.income)
     },
+    catIcons: catIcons,
+    removedCats: removedCats,
+    catSeed: Math.max(savedSeed, CAT_SEED),
     entries: Array.isArray(s.entries) ? s.entries.filter(e => e && e.date && e.amount).map(e => ({
       id: e.id || uid(),
       type: e.type === 'income' ? 'income' : 'expense',
@@ -1157,11 +1245,11 @@ function renderDonut(s){
   if (rows.length === 1){
     donut.innerHTML =
       '<svg viewBox="0 0 140 140" role="img" aria-label="카테고리별 지출 차트">' +
-        '<circle cx="70" cy="70" r="' + R + '" fill="none" stroke="' + PALETTE[0] + '" stroke-width="' + SW + '"/>' +
+        '<circle cx="70" cy="70" r="' + R + '" fill="none" stroke="' + catColor(rows[0][0], 0) + '" stroke-width="' + SW + '"/>' +
       '</svg>' +
       '<div class="donut-center"><span class="k">총 지출</span><span class="v num">' + comma(total) + '</span></div>';
     legend.innerHTML = '<div class="lg-row" data-cat="' + esc(rows[0][0]) + '">' +
-      '<span class="lg-dot" style="background:' + PALETTE[0] + '"></span>' +
+      '<span class="lg-dot" style="background:' + catColor(rows[0][0], 0) + '"></span>' +
       '<span class="lg-name">' + esc(rows[0][0]) + '</span>' +
       '<span class="lg-amt num">' + comma(rows[0][1]) + '</span>' +
       '<span class="lg-pct num">100%</span>' +
@@ -1172,7 +1260,7 @@ function renderDonut(s){
   let segs = '';
   rows.forEach((r, i) => {
     const len = (r[1] / total) * C;
-    const color = PALETTE[i % PALETTE.length];
+    const color = catColor(r[0], i);
     const gap = rows.length > 1 ? 1.6 : 0;
     segs += '<circle cx="70" cy="70" r="' + R + '" fill="none" stroke="' + color + '" stroke-width="' + SW +
       '" stroke-dasharray="' + Math.max(0, len - gap).toFixed(2) + ' ' + (C - Math.max(0, len - gap)).toFixed(2) +
@@ -1189,7 +1277,7 @@ function renderDonut(s){
   legend.innerHTML = rows.map((r, i) => {
     const pct = Math.round(r[1] / total * 1000) / 10;
     return '<div class="lg-row" data-cat="' + esc(r[0]) + '">' +
-      '<span class="lg-dot" style="background:' + PALETTE[i % PALETTE.length] + '"></span>' +
+      '<span class="lg-dot" style="background:' + catColor(r[0], i) + '"></span>' +
       '<span class="lg-name">' + esc(r[0]) + '</span>' +
       '<span class="lg-amt num">' + comma(r[1]) + '</span>' +
       '<span class="lg-pct num">' + pct + '%</span>' +
@@ -1199,7 +1287,7 @@ function renderDonut(s){
 
 function entryRowHTML(e){
   const isInc = e.type === 'income';
-  const icon = ICON[e.category] || (isInc ? '💰' : '📌');
+  const icon = catIcon(e.category, e.type);
   return '<button class="entry" data-entry="' + e.id + '">' +
     '<span class="e-icon">' + icon + '</span>' +
     '<span class="e-main">' +
@@ -1293,8 +1381,19 @@ function renderSettings(){
   ['expense','income'].forEach(type => {
     const box = $(type + 'CatChips');
     box.innerHTML = state.cats[type].map(c =>
-      '<span class="mchip">' + esc(c) + '<button data-delcat="' + type + '" data-cat="' + esc(c) + '" aria-label="' + esc(c) + ' 삭제">✕</button></span>'
+      '<span class="mchip"><span class="m-ico">' + catIcon(c, type) + '</span>' + esc(c) +
+      '<button data-delcat="' + type + '" data-cat="' + esc(c) + '" aria-label="' + esc(c) + ' 삭제">✕</button></span>'
     ).join('');
+    const pick = $(type === 'expense' ? 'newExpenseEmoji' : 'newIncomeEmoji');
+    const row = $(type === 'expense' ? 'expenseEmojiRow' : 'incomeEmojiRow');
+    if (pick){
+      pick.textContent = settingsEmoji[type] || defaultEmoji(type);
+      pick.classList.toggle('on', !!settingsEmojiOpen[type]);
+    }
+    if (row){
+      row.classList.toggle('show', !!settingsEmojiOpen[type]);
+      if (settingsEmojiOpen[type]) renderEmojiChoices(row, settingsEmoji[type] || defaultEmoji(type));
+    }
   });
 
   $('newExpenseCat').value = $('newExpenseCat').value || '';
@@ -1311,6 +1410,10 @@ function renderAll(){
 let editingId = null;
 let entryType = 'expense';
 let entryCat = '';
+let entryCatAdding = false;   // 입력 시트의 '＋ 추가' 팔레트 열림 여부
+let entryCatEmoji = '';       // 새 카테고리에 붙일 아이콘
+let settingsEmoji = { expense: '📌', income: '💰' };
+let settingsEmojiOpen = { expense: false, income: false };
 
 function openEntrySheet(id){
   const p = currentPeriod();
@@ -1340,6 +1443,7 @@ function openEntrySheet(id){
     $('entryDelete').classList.add('hidden');
   }
   setSegType();
+  resetEntryCatAdd();
   renderEntryCats();
   $('entryError').classList.add('hidden');
   openSheet('entry');
@@ -1354,8 +1458,66 @@ function renderEntryCats(){
   const list = state.cats[entryType];
   if (list.indexOf(entryCat) < 0) entryCat = list[0] || '';
   $('entryCats').innerHTML = list.map(c =>
-    '<button class="chip ' + (c === entryCat ? 'on' : '') + '" data-cat="' + esc(c) + '">' + (ICON[c] || '') + ' ' + esc(c) + '</button>'
-  ).join('');
+    '<button class="chip ' + (c === entryCat ? 'on' : '') + '" data-cat="' + esc(c) + '">' + catIcon(c, entryType) + ' ' + esc(c) + '</button>'
+  ).join('') +
+  '<button type="button" class="chip chip-add' + (entryCatAdding ? ' on' : '') + '" id="entryCatAdd" aria-label="새 카테고리 추가">＋ 추가</button>';
+  syncEntryCatAddForm();
+}
+
+/* 입력 중 새 카테고리 만들기 — 카테고리 칩 줄 끝의 '＋ 추가' */
+function resetEntryCatAdd(){
+  entryCatAdding = false;
+  entryCatEmoji = defaultEmoji(entryType);
+  const input = $('entryCatName');
+  if (input) input.value = '';
+  setCatAddErr('');
+}
+function syncEntryCatAddForm(){
+  const form = $('entryCatAddForm');
+  if (!form) return;
+  form.classList.toggle('show', entryCatAdding);
+  if (!entryCatAdding) return;
+  if (EMOJI_CHOICES.indexOf(entryCatEmoji) < 0) entryCatEmoji = defaultEmoji(entryType);
+  renderEmojiChoices($('entryCatEmojiRow'), entryCatEmoji);
+}
+function setCatAddErr(msg){
+  const el = $('entryCatAddErr');
+  if (!el) return;
+  el.textContent = msg || '';
+  el.classList.toggle('show', !!msg);
+}
+function confirmEntryCatAdd(){
+  const input = $('entryCatName');
+  const name = (input.value || '').replace(/\s+/g, ' ').trim();
+  if (!name){ setCatAddErr('카테고리 이름을 입력해 주세요.'); return; }
+  const list = state.cats[entryType];
+  if (list.indexOf(name) >= 0){
+    entryCat = name;
+    entryCatAdding = false;
+    input.value = '';
+    setCatAddErr('');
+    saveState();
+    renderEntryCats();
+    toast('이미 있는 카테고리예요 — 선택했어요');
+    return;
+  }
+  list.push(name);
+  if (entryCatEmoji && entryCatEmoji !== defaultEmoji(entryType)){
+    if (!state.catIcons) state.catIcons = {};
+    state.catIcons[name] = entryCatEmoji;
+  }
+  if (!state.removedCats) state.removedCats = { expense: [], income: [] };
+  if (!state.removedCats[entryType]) state.removedCats[entryType] = [];
+  const ri = state.removedCats[entryType].indexOf(name);
+  if (ri >= 0) state.removedCats[entryType].splice(ri, 1);
+  entryCat = name;
+  entryCatAdding = false;
+  input.value = '';
+  setCatAddErr('');
+  saveState();
+  renderEntryCats();
+  renderSettings();
+  toast('‘' + name + '’ 카테고리를 추가했어요');
 }
 
 function showEntryError(msg){
@@ -1606,11 +1768,22 @@ function openBudgetSheet(){
 /* ======================= categories ======================= */
 function addCategory(type){
   const input = $(type === 'expense' ? 'newExpenseCat' : 'newIncomeCat');
-  const v = input.value.trim();
-  if (!v) return;
+  const v = (input.value || '').replace(/\s+/g, ' ').trim();
+  if (!v){ toast('카테고리 이름을 입력해 주세요'); return; }
   if (state.cats[type].indexOf(v) >= 0){ toast('이미 있는 카테고리예요'); return; }
   state.cats[type].push(v);
+  const emoji = settingsEmoji[type] || defaultEmoji(type);
+  if (emoji !== defaultEmoji(type)){
+    if (!state.catIcons) state.catIcons = {};
+    state.catIcons[v] = emoji;
+  }
+  if (!state.removedCats) state.removedCats = { expense: [], income: [] };
+  if (!state.removedCats[type]) state.removedCats[type] = [];
+  const ri = state.removedCats[type].indexOf(v);
+  if (ri >= 0) state.removedCats[type].splice(ri, 1);
   input.value = '';
+  settingsEmoji[type] = defaultEmoji(type);
+  settingsEmojiOpen[type] = false;
   saveState();
   renderSettings();
   toast('카테고리를 추가했어요');
@@ -1628,6 +1801,11 @@ function deleteCategory(type, cat){
     onOk: function(){
       state.cats[type] = state.cats[type].filter(c => c !== cat);
       if (state.cats[type].indexOf(fallback) < 0) state.cats[type].push(fallback);
+      // 사용자가 직접 지웠다는 기록 — 다음에 앱을 열어도 기본 카테고리 자동 보강이 되살리지 않는다
+      if (!state.removedCats) state.removedCats = { expense: [], income: [] };
+      if (!state.removedCats[type]) state.removedCats[type] = [];
+      if (state.removedCats[type].indexOf(cat) < 0) state.removedCats[type].push(cat);
+      if (state.catIcons) delete state.catIcons[cat];
       state.entries.forEach(e => {
         if (e.type === type && e.category === cat) e.category = fallback;
       });
@@ -1689,8 +1867,10 @@ function stamp(){
 }
 function exportJSON(){
   const payload = {
-    app: 'payday-ledger', version: 1, exportedAt: new Date().toISOString(),
-    periods: state.periods, currentPeriodId: state.currentPeriodId, cats: state.cats, entries: state.entries
+    app: 'payday-ledger', version: 2, exportedAt: new Date().toISOString(),
+    periods: state.periods, currentPeriodId: state.currentPeriodId, cats: state.cats,
+    catIcons: state.catIcons, removedCats: state.removedCats, catSeed: state.catSeed,
+    entries: state.entries
   };
   download('월급날가계부-백업-' + stamp() + '.json', JSON.stringify(payload, null, 2), 'application/json');
   toast('JSON 백업 파일을 만들었어요');
@@ -1783,14 +1963,38 @@ function bind(){
     if (!b) return;
     entryType = b.dataset.t;
     entryCat = state.cats[entryType][0] || '';
+    resetEntryCatAdd();
     setSegType();
     renderEntryCats();
   });
   $('entryCats').addEventListener('click', ev => {
+    const add = ev.target.closest('#entryCatAdd');
+    if (add){
+      entryCatAdding = !entryCatAdding;
+      if (entryCatAdding){ entryCatEmoji = defaultEmoji(entryType); setCatAddErr(''); }
+      renderEntryCats();
+      if (entryCatAdding) setTimeout(() => { try { $('entryCatName').focus(); } catch(e){} }, 60);
+      return;
+    }
     const b = ev.target.closest('.chip');
-    if (!b) return;
+    if (!b || !b.dataset.cat) return;
     entryCat = b.dataset.cat;
+    entryCatAdding = false;
+    setCatAddErr('');
     renderEntryCats();
+  });
+  $('entryCatAddBtn').addEventListener('click', confirmEntryCatAdd);
+  $('entryCatAddCancel').addEventListener('click', () => { entryCatAdding = false; setCatAddErr(''); renderEntryCats(); });
+  $('entryCatName').addEventListener('input', () => setCatAddErr(''));
+  $('entryCatName').addEventListener('keydown', ev => {
+    if (ev.key === 'Enter'){ ev.preventDefault(); confirmEntryCatAdd(); }
+    else if (ev.key === 'Escape'){ ev.stopPropagation(); entryCatAdding = false; setCatAddErr(''); renderEntryCats(); }
+  });
+  $('entryCatEmojiRow').addEventListener('click', ev => {
+    const b = ev.target.closest('.emoji-btn');
+    if (!b) return;
+    entryCatEmoji = b.dataset.emoji;
+    renderEmojiChoices($('entryCatEmojiRow'), entryCatEmoji);
   });
   $('entryAmount').addEventListener('input', () => {
     const digits = $('entryAmount').value.replace(/[^\d]/g, '').slice(0, 12);
@@ -1899,6 +2103,23 @@ function bind(){
     if (b.dataset.pact === 'del') deletePeriod(id);
   });
   document.querySelectorAll('[data-addcat]').forEach(b => b.addEventListener('click', () => addCategory(b.dataset.addcat)));
+  ['expense','income'].forEach(type => {
+    const pick = $(type === 'expense' ? 'newExpenseEmoji' : 'newIncomeEmoji');
+    const row = $(type === 'expense' ? 'expenseEmojiRow' : 'incomeEmojiRow');
+    if (pick) pick.addEventListener('click', () => {
+      settingsEmojiOpen[type] = !settingsEmojiOpen[type];
+      row.classList.toggle('show', settingsEmojiOpen[type]);
+      pick.classList.toggle('on', settingsEmojiOpen[type]);
+      if (settingsEmojiOpen[type]) renderEmojiChoices(row, settingsEmoji[type] || defaultEmoji(type));
+    });
+    if (row) row.addEventListener('click', ev => {
+      const b = ev.target.closest('.emoji-btn');
+      if (!b) return;
+      settingsEmoji[type] = b.dataset.emoji;
+      renderEmojiChoices(row, settingsEmoji[type]);
+      if (pick) pick.textContent = settingsEmoji[type];
+    });
+  });
   ['newExpenseCat','newIncomeCat'].forEach(id => {
     $(id).addEventListener('keydown', ev => {
       if (ev.key === 'Enter'){ ev.preventDefault(); addCategory(id === 'newExpenseCat' ? 'expense' : 'income'); }
@@ -2009,6 +2230,9 @@ window.__ledger = {
   holidaysFor: (y) => Object.assign({}, KR_HOLIDAYS[y] || {}),
   holidayYears: () => Object.keys(KR_HOLIDAYS).map(Number),
   buildCSV: () => buildCSV(),
+  cats: () => JSON.parse(JSON.stringify(state.cats)),
+  catIcons: () => JSON.parse(JSON.stringify(state.catIcons || {})),
+  catColor: (cat, i) => catColor(cat, i || 0),
   today: () => todayISO(),
   storageOK: () => storageOK
 };
