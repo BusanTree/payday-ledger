@@ -1,7 +1,7 @@
 /* 월급날 가계부 — 오프라인 셸 캐시
    index.html 하나에 앱 전체가 들어 있어, 첫 방문 후에는 인터넷 없이도 열린다.
    파일을 새로 올릴 때는 CACHE 이름의 버전을 올리면 된다. */
-const CACHE = 'payday-ledger-v1';
+const CACHE = 'payday-ledger-v2';
 const ASSETS = [
   './',
   './index.html',
